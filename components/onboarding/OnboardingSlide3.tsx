@@ -122,21 +122,25 @@ export default function OnboardingSlide3({ direction = "right" }: Props) {
 
         {/* Log in + Register */}
         <div style={{ display: "flex", gap: 12, marginBottom: 14 }}>
-          <button style={{
+          <a href="/login" style={{
             flex: 1, height: 52, borderRadius: 28, border: "none", cursor: "pointer",
             background: "linear-gradient(135deg, #5B4FFF, #7C6FFF)",
             color: "white", fontSize: 16, fontWeight: 700,
             boxShadow: "0 8px 24px rgba(91,79,255,0.35)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            textDecoration: "none",
           }}>
             Log in
-          </button>
-          <button style={{
+          </a>
+          <a href="/signup" style={{
             flex: 1, height: 52, borderRadius: 28, border: "none", cursor: "pointer",
             background: "#F0EFFF",
             color: "#5B4FFF", fontSize: 16, fontWeight: 700,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            textDecoration: "none",
           }}>
             Register
-          </button>
+          </a>
         </div>
 
         {/* Google */}
