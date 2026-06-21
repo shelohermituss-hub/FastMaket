@@ -34,7 +34,7 @@ export default function SignUpSuccess() {
       </p>
 
       <button
-        onClick={() => router.push("/")}
+        onClick={() => router.push("/home")}
         style={{
           width: "100%", height: 56, borderRadius: 28, border: "none",
           background: "linear-gradient(135deg, #5B4FFF 0%, #7C6FFF 100%)",

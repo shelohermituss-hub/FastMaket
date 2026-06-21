@@ -168,7 +168,7 @@ export default function LoginScreen() {
       {/* Login CTA */}
       <div style={{ padding: "0 24px 16px" }}>
         <button
-          onClick={() => canLogin && router.push("/")}
+          onClick={() => canLogin && router.push("/home")}
           style={{
             width: "100%", height: 56, borderRadius: 28, border: "none",
             background: canLogin

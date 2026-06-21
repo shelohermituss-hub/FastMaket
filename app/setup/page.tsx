@@ -472,7 +472,7 @@ function SetupComplete({ currency, budget }: { currency: string; budget: number 
             { icon: "📊", label: "Analytics", color: "#FFF7ED", textColor: "#EA580C" },
             { icon: "💳", label: "My Cards", color: "#FFF1F2", textColor: "#E11D48" },
           ].map(a => (
-            <button key={a.label} onClick={() => router.push("/")} style={{
+            <button key={a.label} onClick={() => router.push("/home")} style={{
               height: 56, borderRadius: 16, border: "none", cursor: "pointer",
               background: a.color, display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
             }}>
@@ -484,7 +484,7 @@ function SetupComplete({ currency, budget }: { currency: string; budget: number 
       </div>
 
       <div style={{ padding: "8px 24px 40px" }}>
-        <button onClick={() => router.push("/")} style={{
+        <button onClick={() => router.push("/home")} style={{
           width: "100%", height: 56, borderRadius: 28, border: "none",
           background: "linear-gradient(135deg,#5B4FFF,#7C6FFF)", color: "white",
           fontSize: 16, fontWeight: 700, cursor: "pointer",
