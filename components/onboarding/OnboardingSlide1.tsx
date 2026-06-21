@@ -5,112 +5,134 @@ interface Props {
 }
 
 export default function OnboardingSlide1({ direction = "right" }: Props) {
+  const animStyle: React.CSSProperties = {
+    animation: direction === "right"
+      ? "slideInRight 0.4s ease-out"
+      : "slideInLeft 0.4s ease-out",
+  };
+
   return (
     <div
-      className={`relative w-full h-full flex flex-col animate-${direction === "right" ? "slide-in-right" : "slide-in-left"}`}
+      className="relative w-full h-full flex flex-col"
       style={{
         background: "linear-gradient(160deg, #0D0060 0%, #2A0FA0 35%, #4B1FD4 65%, #7B3FF5 100%)",
+        ...animStyle,
       }}
     >
       {/* Status bar */}
-      <div className="flex justify-between items-center px-7 pt-3 pb-2 text-white/90 text-xs font-medium">
+      <div className="flex justify-between items-center px-7 pt-4 pb-2 text-white/90 text-xs font-medium">
         <span>09:41</span>
         <div className="flex items-center gap-1.5">
-          <svg width="16" height="12" viewBox="0 0 16 12" fill="white">
-            <rect x="0" y="4" width="3" height="8" rx="1"/>
-            <rect x="4.5" y="2.5" width="3" height="9.5" rx="1"/>
-            <rect x="9" y="1" width="3" height="11" rx="1"/>
+          <svg width="16" height="11" viewBox="0 0 16 11" fill="white">
+            <rect x="0" y="5" width="3" height="6" rx="1" />
+            <rect x="4.5" y="3" width="3" height="8" rx="1" />
+            <rect x="9" y="1" width="3" height="10" rx="1" />
           </svg>
-          <svg width="15" height="12" viewBox="0 0 15 12" fill="white">
-            <path d="M7.5 2.5C9.8 2.5 11.8 3.5 13.2 5L14.5 3.7C12.8 2 10.3 1 7.5 1S2.2 2 0.5 3.7L1.8 5C3.2 3.5 5.2 2.5 7.5 2.5Z"/>
-            <path d="M7.5 5.5C9 5.5 10.3 6.1 11.3 7.1L12.6 5.8C11.3 4.6 9.5 3.9 7.5 3.9S3.7 4.6 2.4 5.8L3.7 7.1C4.7 6.1 6 5.5 7.5 5.5Z"/>
-            <circle cx="7.5" cy="10" r="1.5"/>
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="white" fillOpacity="0.9">
+            <path d="M8 2.4C10.6 2.4 12.9 3.5 14.5 5.3L16 3.8C14 1.5 11.2 0 8 0S2 1.5 0 3.8L1.5 5.3C3.1 3.5 5.4 2.4 8 2.4Z" />
+            <path d="M8 5.6C9.7 5.6 11.2 6.3 12.3 7.5L13.8 6C12.3 4.5 10.3 3.6 8 3.6S3.7 4.5 2.2 6L3.7 7.5C4.8 6.3 6.3 5.6 8 5.6Z" />
+            <circle cx="8" cy="10" r="2" />
           </svg>
-          <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
-            <rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="white" strokeOpacity="0.35"/>
-            <rect x="2" y="2" width="15" height="8" rx="2" fill="white"/>
-            <path d="M23 4.5V7.5C23.8 7.2 24.5 6.5 24.5 6S23.8 4.8 23 4.5Z" fill="white" fillOpacity="0.4"/>
-          </svg>
+          <div className="flex items-center gap-0.5">
+            <div className="w-5 h-2.5 rounded-sm border border-white/50 p-0.5">
+              <div className="w-3 h-full bg-white rounded-sm" />
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Logo */}
-      <div className="px-7 mt-4">
-        <div className="flex items-center gap-1">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <path d="M11 2L20 7V15L11 20L2 15V7L11 2Z" fill="white" fillOpacity="0.9"/>
-            <path d="M11 6L16 9V13L11 16L6 13V9L11 6Z" fill="#4040FF"/>
+      <div className="px-7 mt-3">
+        <div className="flex items-center gap-1.5">
+          <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
+            <path d="M11 1L21 6.5V15.5L11 21L1 15.5V6.5L11 1Z" fill="white" fillOpacity="0.85" />
+            <path d="M11 5L18 9V13L11 17L4 13V9L11 5Z" fill="#3333DD" />
           </svg>
-          <span className="text-white font-black text-xl tracking-tight">FiNCORe</span>
+          <span className="text-white font-black text-lg tracking-widest uppercase">FiNCORe</span>
         </div>
       </div>
 
-      {/* Card visual area */}
-      <div className="flex-1 flex items-center justify-center px-8 mt-2">
-        <div className="relative w-full" style={{ maxWidth: "300px", height: "220px" }}>
-          {/* Glow */}
+      {/* Card visual — center zone */}
+      <div className="flex-1 flex items-center justify-center relative px-8" style={{ minHeight: 0 }}>
+        {/* Glow blob */}
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            width: "280px",
+            height: "280px",
+            borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(150,120,255,0.5) 0%, transparent 70%)",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -60%)",
+            filter: "blur(40px)",
+          }}
+        />
+
+        {/* Credit card */}
+        <div
+          style={{
+            width: "100%",
+            maxWidth: "310px",
+            height: "175px",
+            borderRadius: "20px",
+            background: "linear-gradient(135deg, rgba(30,20,180,0.85) 0%, rgba(80,60,220,0.7) 100%)",
+            backdropFilter: "blur(16px)",
+            border: "1px solid rgba(255,255,255,0.15)",
+            boxShadow: "0 20px 60px rgba(0,0,80,0.4)",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          {/* Shimmer */}
           <div
-            className="absolute rounded-full blur-3xl opacity-40"
             style={{
-              width: "260px",
-              height: "260px",
-              background: "radial-gradient(circle, #8080FF 0%, #4040FF 50%, transparent 100%)",
-              top: "-20px",
-              left: "50%",
-              transform: "translateX(-50%)",
+              position: "absolute",
+              inset: 0,
+              background: "radial-gradient(ellipse at 25% 25%, rgba(255,255,255,0.25) 0%, transparent 55%)",
             }}
           />
-          {/* Blue card */}
-          <div
-            className="absolute rounded-2xl shadow-2xl"
-            style={{
-              width: "290px",
-              height: "170px",
-              top: "20px",
-              left: "50%",
-              transform: "translateX(-50%) rotate(-2deg)",
-              background: "linear-gradient(135deg, #1a1aff 0%, #3030cc 40%, rgba(255,255,255,0.15) 100%)",
-              backdropFilter: "blur(10px)",
-            }}
-          >
-            <div className="p-5 h-full flex flex-col justify-between">
-              <div className="flex justify-between items-start">
-                <span className="text-white/80 text-sm font-medium">Credit Card</span>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M8 12c0-2.21 1.79-4 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.7"/>
-                  <path d="M5 12c0-3.87 3.13-7 7-7" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.7"/>
-                </svg>
+          <div className="relative p-5 h-full flex flex-col justify-between">
+            <div className="flex justify-between items-center">
+              <span className="text-white/80 text-sm font-medium">Credit Card</span>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" opacity="0.7">
+                <path d="M8.5 12c0-1.93 1.57-3.5 3.5-3.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+                <path d="M5.5 12C5.5 8.41 8.41 5.5 12 5.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+                <path d="M2.5 12C2.5 6.75 6.75 2.5 12 2.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+            </div>
+            <div className="flex justify-between items-end">
+              <div>
+                <p className="text-white/50 text-[9px] mb-0.5">Card Holder</p>
+                <p className="text-white text-sm font-bold">Michael Anthony</p>
               </div>
-              <div className="flex justify-between items-end">
-                <div>
-                  <p className="text-white/50 text-[10px]">Card Holder</p>
-                  <p className="text-white text-sm font-bold">Michael Anthony</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-white/50 text-[10px]">Expires</p>
-                  <p className="text-white text-sm font-bold">01/21</p>
-                </div>
-                <div className="flex -space-x-2">
-                  <div className="w-7 h-7 rounded-full bg-white/30" />
-                  <div className="w-7 h-7 rounded-full bg-white/20" />
-                </div>
+              <div>
+                <p className="text-white/50 text-[9px] mb-0.5">Expires</p>
+                <p className="text-white text-sm font-bold">01/21</p>
+              </div>
+              <div className="flex -space-x-2">
+                <div className="w-7 h-7 rounded-full" style={{ background: "rgba(255,255,255,0.3)" }} />
+                <div className="w-7 h-7 rounded-full" style={{ background: "rgba(255,255,255,0.2)" }} />
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Text content */}
+      {/* White panel at bottom */}
       <div
-        className="px-7 pb-32 pt-6 rounded-t-3xl mt-auto"
-        style={{ background: "rgba(255,255,255,0.95)" }}
+        className="px-7 pt-7 pb-36"
+        style={{
+          background: "rgba(255,255,255,0.97)",
+          borderRadius: "28px 28px 0 0",
+        }}
       >
         <p className="text-gray-400 text-sm font-medium mb-2">News For You</p>
-        <h1 className="text-2xl font-black text-gray-900 leading-tight">
+        <h1 className="text-[26px] font-black text-gray-900 leading-tight">
           All-in-One Solution
           <br />
           for Modern{" "}
-          <span className="text-gray-300">Money Management</span>
+          <span className="text-gray-300 font-black">Money Management</span>
         </h1>
       </div>
     </div>
