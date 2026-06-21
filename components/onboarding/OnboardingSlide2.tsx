@@ -5,151 +5,56 @@ interface Props {
 }
 
 export default function OnboardingSlide2({ direction = "right" }: Props) {
-  const animStyle: React.CSSProperties = {
-    animation: direction === "right"
-      ? "slideInRight 0.4s ease-out"
-      : "slideInLeft 0.4s ease-out",
-  };
-
   return (
     <div
-      className="relative w-full h-full flex flex-col bg-white dark:bg-gray-950 overflow-hidden"
-      style={animStyle}
+      className="relative w-full h-full overflow-hidden flex flex-col"
+      style={{
+        background: "linear-gradient(180deg, #6B5FFF 0%, #9B8FFF 50%, #C4BAFF 100%)",
+        animation: `${direction === "right" ? "slideInRight" : "slideInLeft"} 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94)`,
+      }}
     >
-      {/* Gradient blobs */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          width: "250px",
-          height: "250px",
-          borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(192,132,252,0.35) 0%, transparent 70%)",
-          top: "-60px",
-          right: "-60px",
-          filter: "blur(40px)",
-        }}
-      />
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          width: "180px",
-          height: "180px",
-          borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(129,140,248,0.2) 0%, transparent 70%)",
-          top: "80px",
-          left: "-40px",
-          filter: "blur(30px)",
-        }}
-      />
+      {/* Vertical stripe texture overlay */}
+      <div style={{
+        position: "absolute", inset: 0, pointerEvents: "none",
+        backgroundImage: "repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 28px)",
+      }} />
 
       {/* Status bar */}
-      <div className="flex justify-between items-center px-7 pt-4 pb-2 text-gray-600 dark:text-gray-400 text-xs font-medium">
-        <span>09:41</span>
-        <div className="flex items-center gap-1.5">
-          <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor">
-            <rect x="0" y="5" width="3" height="6" rx="1" />
-            <rect x="4.5" y="3" width="3" height="8" rx="1" />
-            <rect x="9" y="1" width="3" height="10" rx="1" />
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 24px 0", position: "relative", zIndex: 10 }}>
+        <span style={{ fontSize: 15, fontWeight: 600, color: "#111" }}>09:41</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <svg width="17" height="12" viewBox="0 0 17 12" fill="none">
+            <rect x="0" y="5" width="3" height="7" rx="1" fill="#111"/>
+            <rect x="4.5" y="3" width="3" height="9" rx="1" fill="#111"/>
+            <rect x="9" y="1" width="3" height="11" rx="1" fill="#111"/>
           </svg>
-          <div className="flex items-center gap-0.5">
-            <div className="w-5 h-2.5 rounded-sm border border-current p-0.5 opacity-40">
-              <div className="w-3 h-full bg-current rounded-sm" />
-            </div>
+          <div style={{ width: 22, height: 11, borderRadius: 3, border: "1.5px solid #111", padding: "1.5px", display: "flex", alignItems: "center" }}>
+            <div style={{ width: 13, height: "100%", background: "#111", borderRadius: 1.5 }} />
           </div>
         </div>
       </div>
 
-      {/* Stacked cards area */}
-      <div className="flex-1 flex items-center justify-center relative" style={{ minHeight: 0 }}>
-        {/* Dark card — back */}
-        <div
-          style={{
-            position: "absolute",
-            width: "295px",
-            height: "175px",
-            borderRadius: "20px",
-            background: "linear-gradient(135deg, #1c1c1e 0%, #2d2d30 100%)",
-            boxShadow: "0 10px 40px rgba(0,0,0,0.2)",
-            transform: "rotate(6deg) translateX(22px) translateY(8px)",
-          }}
-        >
-          <div className="p-5 h-full flex flex-col justify-between">
-            <span className="text-white/50 text-sm">Credit Card</span>
-            <div className="flex justify-between items-end">
-              <div>
-                <p className="text-white/30 text-[9px] mb-0.5">Card Holder</p>
-                <p className="text-white/60 text-sm font-bold">Michael Anthony</p>
-              </div>
-              <div className="flex -space-x-2">
-                <div className="w-7 h-7 rounded-full bg-amber-500 opacity-80" />
-                <div className="w-7 h-7 rounded-full bg-amber-800 opacity-70" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Orange card — front */}
-        <div
-          style={{
-            position: "absolute",
-            width: "295px",
-            height: "175px",
-            borderRadius: "20px",
-            background: "linear-gradient(135deg, #FF8C42 0%, #E0591E 55%, #C44B0E 100%)",
-            boxShadow: "0 20px 60px rgba(200,80,20,0.35)",
-            transform: "rotate(-2deg)",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "radial-gradient(ellipse at 28% 28%, rgba(255,255,255,0.3) 0%, transparent 55%)",
-            }}
-          />
-          <div className="relative p-5 h-full flex flex-col justify-between">
-            <div className="flex justify-between items-center">
-              <span className="text-white text-sm font-medium">Credit Card</span>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" opacity="0.7">
-                <path d="M8.5 12c0-1.93 1.57-3.5 3.5-3.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M5.5 12C5.5 8.41 8.41 5.5 12 5.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M2.5 12C2.5 6.75 6.75 2.5 12 2.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            </div>
-            <svg width="36" height="28" viewBox="0 0 36 28" fill="none">
-              <rect width="36" height="28" rx="4" fill="rgba(255,255,255,0.2)" />
-              <rect x="7" y="7" width="22" height="14" rx="2" fill="rgba(255,255,255,0.25)" />
-              <line x1="18" y1="7" x2="18" y2="21" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-              <line x1="7" y1="14" x2="29" y2="14" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-            </svg>
-            <div className="flex justify-between items-end">
-              <div>
-                <p className="text-white/60 text-[9px] mb-0.5">Card Holder</p>
-                <p className="text-white text-sm font-bold">Michael Anthony</p>
-              </div>
-              <div>
-                <p className="text-white/60 text-[9px] mb-0.5">Expires</p>
-                <p className="text-white text-sm font-bold">01/21</p>
-              </div>
-              <div className="flex -space-x-2">
-                <div className="w-7 h-7 rounded-full bg-amber-400 opacity-95" />
-                <div className="w-7 h-7 rounded-full bg-amber-700 opacity-85" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Text */}
-      <div className="px-7 pb-36 pt-4">
-        <h1 className="text-[30px] font-black text-gray-900 dark:text-white leading-tight mb-3">
-          Banking Just
-          <br />
-          <span style={{ color: "#4040FF" }}>Got Easier!</span>
+      {/* Big typography */}
+      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "flex-start", padding: "20px 28px 0", position: "relative", zIndex: 10 }}>
+        <h1 style={{
+          fontSize: 58,
+          fontWeight: 900,
+          lineHeight: 1.05,
+          color: "#0a0a0a",
+          letterSpacing: -1,
+        }}>
+          All-<br />
+          Inclusive<br />
+          Financial<br />
+          Payment<br />
+          Service.
         </h1>
-        <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-          Unmatched Payment Encryption Technology For Maximum Protection
+      </div>
+
+      {/* Subtitle + bottom spacing */}
+      <div style={{ padding: "16px 28px 120px", position: "relative", zIndex: 10 }}>
+        <p style={{ fontSize: 14, color: "rgba(0,0,0,0.5)", lineHeight: 1.5 }}>
+          Unmatched Payment Encryption Technology for Maximum Protection
         </p>
       </div>
     </div>

@@ -5,135 +5,108 @@ interface Props {
 }
 
 export default function OnboardingSlide1({ direction = "right" }: Props) {
-  const animStyle: React.CSSProperties = {
-    animation: direction === "right"
-      ? "slideInRight 0.4s ease-out"
-      : "slideInLeft 0.4s ease-out",
-  };
-
   return (
     <div
-      className="relative w-full h-full flex flex-col"
+      className="relative w-full h-full bg-white overflow-hidden flex flex-col"
       style={{
-        background: "linear-gradient(160deg, #0D0060 0%, #2A0FA0 35%, #4B1FD4 65%, #7B3FF5 100%)",
-        ...animStyle,
+        animation: `${direction === "right" ? "slideInRight" : "slideInLeft"} 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94)`,
       }}
     >
-      {/* Status bar */}
-      <div className="flex justify-between items-center px-7 pt-4 pb-2 text-white/90 text-xs font-medium">
-        <span>09:41</span>
-        <div className="flex items-center gap-1.5">
-          <svg width="16" height="11" viewBox="0 0 16 11" fill="white">
-            <rect x="0" y="5" width="3" height="6" rx="1" />
-            <rect x="4.5" y="3" width="3" height="8" rx="1" />
-            <rect x="9" y="1" width="3" height="10" rx="1" />
-          </svg>
-          <svg width="16" height="12" viewBox="0 0 16 12" fill="white" fillOpacity="0.9">
-            <path d="M8 2.4C10.6 2.4 12.9 3.5 14.5 5.3L16 3.8C14 1.5 11.2 0 8 0S2 1.5 0 3.8L1.5 5.3C3.1 3.5 5.4 2.4 8 2.4Z" />
-            <path d="M8 5.6C9.7 5.6 11.2 6.3 12.3 7.5L13.8 6C12.3 4.5 10.3 3.6 8 3.6S3.7 4.5 2.2 6L3.7 7.5C4.8 6.3 6.3 5.6 8 5.6Z" />
-            <circle cx="8" cy="10" r="2" />
-          </svg>
-          <div className="flex items-center gap-0.5">
-            <div className="w-5 h-2.5 rounded-sm border border-white/50 p-0.5">
-              <div className="w-3 h-full bg-white rounded-sm" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Logo */}
-      <div className="px-7 mt-3">
-        <div className="flex items-center gap-1.5">
-          <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
-            <path d="M11 1L21 6.5V15.5L11 21L1 15.5V6.5L11 1Z" fill="white" fillOpacity="0.85" />
-            <path d="M11 5L18 9V13L11 17L4 13V9L11 5Z" fill="#3333DD" />
-          </svg>
-          <span className="text-white font-black text-lg tracking-widest uppercase">FiNCORe</span>
-        </div>
-      </div>
-
-      {/* Card visual — center zone */}
-      <div className="flex-1 flex items-center justify-center relative px-8" style={{ minHeight: 0 }}>
-        {/* Glow blob */}
-        <div
-          className="absolute pointer-events-none"
-          style={{
-            width: "280px",
-            height: "280px",
-            borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(150,120,255,0.5) 0%, transparent 70%)",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -60%)",
-            filter: "blur(40px)",
-          }}
-        />
-
-        {/* Credit card */}
-        <div
-          style={{
-            width: "100%",
-            maxWidth: "310px",
-            height: "175px",
-            borderRadius: "20px",
-            background: "linear-gradient(135deg, rgba(30,20,180,0.85) 0%, rgba(80,60,220,0.7) 100%)",
-            backdropFilter: "blur(16px)",
-            border: "1px solid rgba(255,255,255,0.15)",
-            boxShadow: "0 20px 60px rgba(0,0,80,0.4)",
-            position: "relative",
-            overflow: "hidden",
-          }}
-        >
-          {/* Shimmer */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "radial-gradient(ellipse at 25% 25%, rgba(255,255,255,0.25) 0%, transparent 55%)",
-            }}
-          />
-          <div className="relative p-5 h-full flex flex-col justify-between">
-            <div className="flex justify-between items-center">
-              <span className="text-white/80 text-sm font-medium">Credit Card</span>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" opacity="0.7">
-                <path d="M8.5 12c0-1.93 1.57-3.5 3.5-3.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M5.5 12C5.5 8.41 8.41 5.5 12 5.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M2.5 12C2.5 6.75 6.75 2.5 12 2.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            </div>
-            <div className="flex justify-between items-end">
-              <div>
-                <p className="text-white/50 text-[9px] mb-0.5">Card Holder</p>
-                <p className="text-white text-sm font-bold">Michael Anthony</p>
-              </div>
-              <div>
-                <p className="text-white/50 text-[9px] mb-0.5">Expires</p>
-                <p className="text-white text-sm font-bold">01/21</p>
-              </div>
-              <div className="flex -space-x-2">
-                <div className="w-7 h-7 rounded-full" style={{ background: "rgba(255,255,255,0.3)" }} />
-                <div className="w-7 h-7 rounded-full" style={{ background: "rgba(255,255,255,0.2)" }} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* White panel at bottom */}
+      {/* Purple blob background */}
       <div
-        className="px-7 pt-7 pb-36"
         style={{
-          background: "rgba(255,255,255,0.97)",
-          borderRadius: "28px 28px 0 0",
+          position: "absolute",
+          top: -80,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: 420,
+          height: 420,
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(220,215,255,0.9) 0%, rgba(196,186,255,0.6) 40%, transparent 70%)",
+          filter: "blur(20px)",
+          pointerEvents: "none",
         }}
-      >
-        <p className="text-gray-400 text-sm font-medium mb-2">News For You</p>
-        <h1 className="text-[26px] font-black text-gray-900 leading-tight">
-          All-in-One Solution
-          <br />
-          for Modern{" "}
-          <span className="text-gray-300 font-black">Money Management</span>
+      />
+
+      {/* Status bar */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 24px 0", position: "relative", zIndex: 10 }}>
+        <span style={{ fontSize: 15, fontWeight: 600, color: "#111" }}>09:41</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <svg width="17" height="12" viewBox="0 0 17 12" fill="none">
+            <rect x="0" y="5" width="3" height="7" rx="1" fill="#111"/>
+            <rect x="4.5" y="3" width="3" height="9" rx="1" fill="#111"/>
+            <rect x="9" y="1" width="3" height="11" rx="1" fill="#111"/>
+          </svg>
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+            <path d="M8 2.5C10.4 2.5 12.5 3.5 14 5.2L15.5 3.7C13.6 1.8 11 0.5 8 0.5S2.4 1.8 0.5 3.7L2 5.2C3.5 3.5 5.6 2.5 8 2.5Z" fill="#111"/>
+            <path d="M8 5.5C9.6 5.5 11 6.2 12 7.3L13.5 5.8C12.1 4.4 10.2 3.5 8 3.5S3.9 4.4 2.5 5.8L4 7.3C5 6.2 6.4 5.5 8 5.5Z" fill="#111"/>
+            <circle cx="8" cy="10" r="2" fill="#111"/>
+          </svg>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ width: 22, height: 11, borderRadius: 3, border: "1.5px solid #111", padding: "1.5px", display: "flex", alignItems: "center" }}>
+              <div style={{ width: 13, height: "100%", background: "#111", borderRadius: 1.5 }} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Card area */}
+      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", minHeight: 0, marginTop: 20 }}>
+        {/* Ghost shadow card 2 */}
+        <div style={{
+          position: "absolute",
+          width: 290,
+          height: 178,
+          borderRadius: 22,
+          background: "rgba(180,170,255,0.25)",
+          transform: "rotate(12deg) translateX(30px) translateY(12px)",
+        }} />
+        {/* Ghost shadow card 1 */}
+        <div style={{
+          position: "absolute",
+          width: 290,
+          height: 178,
+          borderRadius: 22,
+          background: "rgba(180,170,255,0.4)",
+          transform: "rotate(6deg) translateX(14px) translateY(6px)",
+        }} />
+        {/* Main purple VISA card */}
+        <div style={{
+          position: "relative",
+          width: 290,
+          height: 178,
+          borderRadius: 22,
+          background: "linear-gradient(135deg, #5B4FFF 0%, #7C6FFF 40%, #9B8FFF 100%)",
+          boxShadow: "0 20px 60px rgba(91,79,255,0.35)",
+          transform: "rotate(-5deg)",
+          overflow: "hidden",
+        }}>
+          {/* Shimmer */}
+          <div style={{
+            position: "absolute", inset: 0,
+            background: "radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.25) 0%, transparent 60%)",
+          }} />
+          <div style={{ padding: "20px 22px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", position: "relative" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              <div>
+                <p style={{ color: "rgba(255,255,255,0.7)", fontSize: 11, marginBottom: 2 }}>Michael Anthony</p>
+              </div>
+            </div>
+            <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
+              <span style={{ color: "white", fontSize: 22, fontWeight: 700, fontStyle: "italic", letterSpacing: 2 }}>VISA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Text */}
+      <div style={{ padding: "0 28px 120px" }}>
+        <h1 style={{ fontSize: 30, fontWeight: 900, color: "#0a0a0a", lineHeight: 1.2, marginBottom: 10, textAlign: "center" }}>
+          Virtual payment<br />via cards
         </h1>
+        <p style={{ fontSize: 14, color: "#9CA3AF", textAlign: "center", lineHeight: 1.6, maxWidth: 260, margin: "0 auto" }}>
+          Unmatched Payment Encryption Technology for Maximum Protection
+        </p>
       </div>
     </div>
   );

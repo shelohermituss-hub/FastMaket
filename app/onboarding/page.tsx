@@ -1,10 +1,18 @@
 import OnboardingCarousel from "@/components/onboarding/OnboardingCarousel";
-import ThemeToggle from "@/components/ui/ThemeToggle";
 
 export default function OnboardingPage() {
   return (
-    <main className="relative w-full h-screen overflow-hidden bg-white dark:bg-gray-950">
-      <ThemeToggle />
+    <main
+      style={{
+        position: "relative",
+        width: "100%",
+        height: "100dvh",
+        overflow: "hidden",
+        maxWidth: 430,
+        margin: "0 auto",
+        background: "white",
+      }}
+    >
       <OnboardingCarousel />
     </main>
   );
