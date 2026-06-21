@@ -83,16 +83,30 @@ function ProgressBar({ current, total }: { current: number; total: number }) {
   );
 }
 
-function Header({ step, total, label, onBack }: { step: number; total: number; label: string; onBack: () => void }) {
+function Header({ step, total, label, onBack, onSkip }: { step: number; total: number; label: string; onBack: () => void; onSkip?: () => void }) {
   return (
     <div style={{ padding: "20px 24px 16px" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: onSkip ? 10 : 16 }}>
         <BackBtn onClick={onBack} />
         <div style={{ flex: 1 }}>
           <ProgressBar current={step} total={total} />
         </div>
         <span style={{ fontSize: 12, fontWeight: 600, color: "#9CA3AF", minWidth: 36, textAlign: "right" }}>{step}/{total}</span>
       </div>
+      {onSkip && (
+        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 6 }}>
+          <button onClick={onSkip} style={{
+            border: "none", background: "none", cursor: "pointer", padding: "4px 0",
+            fontSize: 13, fontWeight: 700, color: "#9CA3AF",
+            display: "flex", alignItems: "center", gap: 4,
+          }}>
+            Skip to dashboard
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke="#9CA3AF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      )}
       <p style={{ fontSize: 12, fontWeight: 600, color: "#9CA3AF", textTransform: "uppercase", letterSpacing: 1 }}>{label}</p>
     </div>
   );
@@ -444,11 +458,11 @@ function S07_Gender({ data, onBack, onNext }: { data:FormData; onBack:()=>void; 
 }
 
 // ─── SCREEN 8: Address ────────────────────────────────────────────────────────
-function S08_Address({ data, onBack, onNext }: { data:FormData; onBack:()=>void; onNext:(v:string)=>void }) {
+function S08_Address({ data, onBack, onNext, onSkip }: { data:FormData; onBack:()=>void; onNext:(v:string)=>void; onSkip?:()=>void }) {
   const [address, setAddress]=useState(data.address);
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
-      <Header step={8} total={30} label="Address" onBack={onBack} />
+      <Header step={8} total={30} label="Address" onBack={onBack} onSkip={onSkip} />
       <div style={{ padding:"8px 28px 28px" }}>
         <h1 style={{ fontSize:26, fontWeight:900, color:"#0a0a0a", marginBottom:6 }}>Street address</h1>
         <p style={{ fontSize:14, color:"#9CA3AF", marginBottom:28 }}>Your current residential address</p>
@@ -464,12 +478,12 @@ function S08_Address({ data, onBack, onNext }: { data:FormData; onBack:()=>void;
 }
 
 // ─── SCREEN 9: City / Postal ──────────────────────────────────────────────────
-function S09_City({ data, onBack, onNext }: { data:FormData; onBack:()=>void; onNext:(c:string,p:string)=>void }) {
+function S09_City({ data, onBack, onNext, onSkip }: { data:FormData; onBack:()=>void; onNext:(c:string,p:string)=>void; onSkip?:()=>void }) {
   const [city,setCity]=useState(data.city);
   const [postal,setPostal]=useState(data.postalCode);
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
-      <Header step={9} total={30} label="Address" onBack={onBack} />
+      <Header step={9} total={30} label="Address" onBack={onBack} onSkip={onSkip} />
       <div style={{ padding:"8px 28px 28px", display:"flex", flexDirection:"column", gap:16 }}>
         <div>
           <h1 style={{ fontSize:26, fontWeight:900, color:"#0a0a0a", marginBottom:6 }}>City & postal code</h1>
@@ -485,7 +499,7 @@ function S09_City({ data, onBack, onNext }: { data:FormData; onBack:()=>void; on
 }
 
 // ─── SCREEN 10: Country ───────────────────────────────────────────────────────
-function S10_Country({ data, onBack, onNext }: { data:FormData; onBack:()=>void; onNext:(v:string)=>void }) {
+function S10_Country({ data, onBack, onNext, onSkip }: { data:FormData; onBack:()=>void; onNext:(v:string)=>void; onSkip?:()=>void }) {
   const [sel,setSel]=useState(data.country);
   const COUNTRIES=[
     {flag:"🇺🇸",name:"United States"},{flag:"🇬🇧",name:"United Kingdom"},{flag:"🇫🇷",name:"France"},
@@ -495,7 +509,7 @@ function S10_Country({ data, onBack, onNext }: { data:FormData; onBack:()=>void;
   ];
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
-      <Header step={10} total={30} label="Address" onBack={onBack} />
+      <Header step={10} total={30} label="Address" onBack={onBack} onSkip={onSkip} />
       <div style={{ padding:"8px 28px 16px" }}>
         <h1 style={{ fontSize:26, fontWeight:900, color:"#0a0a0a", marginBottom:6 }}>Country of residence</h1>
         <p style={{ fontSize:14, color:"#9CA3AF", marginBottom:20 }}>Where you currently live</p>
@@ -519,7 +533,7 @@ function S10_Country({ data, onBack, onNext }: { data:FormData; onBack:()=>void;
 }
 
 // ─── SCREEN 11: Nationality ───────────────────────────────────────────────────
-function S11_Nationality({ data, onBack, onNext }: { data:FormData; onBack:()=>void; onNext:(v:string)=>void }) {
+function S11_Nationality({ data, onBack, onNext, onSkip }: { data:FormData; onBack:()=>void; onNext:(v:string)=>void; onSkip?:()=>void }) {
   const [sel,setSel]=useState(data.nationality);
   const LIST=[
     {flag:"🇺🇸",name:"American"},{flag:"🇬🇧",name:"British"},{flag:"🇫🇷",name:"French"},
@@ -529,7 +543,7 @@ function S11_Nationality({ data, onBack, onNext }: { data:FormData; onBack:()=>v
   ];
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
-      <Header step={11} total={30} label="Identity" onBack={onBack} />
+      <Header step={11} total={30} label="Identity" onBack={onBack} onSkip={onSkip} />
       <div style={{ padding:"8px 28px 16px" }}>
         <h1 style={{ fontSize:26, fontWeight:900, color:"#0a0a0a", marginBottom:6 }}>Nationality</h1>
         <p style={{ fontSize:14, color:"#9CA3AF", marginBottom:20 }}>Your citizenship</p>
@@ -553,7 +567,7 @@ function S11_Nationality({ data, onBack, onNext }: { data:FormData; onBack:()=>v
 }
 
 // ─── SCREEN 12: Occupation ────────────────────────────────────────────────────
-function S12_Occupation({ data, onBack, onNext }: { data:FormData; onBack:()=>void; onNext:(v:string)=>void }) {
+function S12_Occupation({ data, onBack, onNext, onSkip }: { data:FormData; onBack:()=>void; onNext:(v:string)=>void; onSkip?:()=>void }) {
   const [sel,setSel]=useState(data.occupation);
   const opts=[
     {icon:"💼",label:"Employed",value:"employed"},{icon:"🏢",label:"Self-employed",value:"self-employed"},
@@ -562,7 +576,7 @@ function S12_Occupation({ data, onBack, onNext }: { data:FormData; onBack:()=>vo
   ];
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
-      <Header step={12} total={30} label="Financial Profile" onBack={onBack} />
+      <Header step={12} total={30} label="Financial Profile" onBack={onBack} onSkip={onSkip} />
       <div style={{ padding:"8px 28px 28px" }}>
         <h1 style={{ fontSize:26, fontWeight:900, color:"#0a0a0a", marginBottom:6 }}>Employment status</h1>
         <p style={{ fontSize:14, color:"#9CA3AF", marginBottom:28 }}>Required for compliance</p>
@@ -575,7 +589,7 @@ function S12_Occupation({ data, onBack, onNext }: { data:FormData; onBack:()=>vo
 }
 
 // ─── SCREEN 13: Income source ─────────────────────────────────────────────────
-function S13_Income({ data, onBack, onNext }: { data:FormData; onBack:()=>void; onNext:(v:string)=>void }) {
+function S13_Income({ data, onBack, onNext, onSkip }: { data:FormData; onBack:()=>void; onNext:(v:string)=>void; onSkip?:()=>void }) {
   const [sel,setSel]=useState(data.income);
   const opts=[
     {icon:"💰",label:"Salary",value:"salary"},{icon:"📈",label:"Investments",value:"investments"},
@@ -584,7 +598,7 @@ function S13_Income({ data, onBack, onNext }: { data:FormData; onBack:()=>void; 
   ];
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
-      <Header step={13} total={30} label="Financial Profile" onBack={onBack} />
+      <Header step={13} total={30} label="Financial Profile" onBack={onBack} onSkip={onSkip} />
       <div style={{ padding:"8px 28px 28px" }}>
         <h1 style={{ fontSize:26, fontWeight:900, color:"#0a0a0a", marginBottom:6 }}>Source of income</h1>
         <p style={{ fontSize:14, color:"#9CA3AF", marginBottom:28 }}>Primary source of your funds</p>
@@ -597,7 +611,7 @@ function S13_Income({ data, onBack, onNext }: { data:FormData; onBack:()=>void; 
 }
 
 // ─── SCREEN 14: ID Type ───────────────────────────────────────────────────────
-function S14_IDType({ data, onBack, onNext }: { data:FormData; onBack:()=>void; onNext:(v:string)=>void }) {
+function S14_IDType({ data, onBack, onNext, onSkip }: { data:FormData; onBack:()=>void; onNext:(v:string)=>void; onSkip?:()=>void }) {
   const [sel,setSel]=useState(data.idType);
   const opts=[
     {icon:"📘",label:"Passport",value:"passport"},{icon:"🪪",label:"National ID",value:"national-id"},
@@ -605,7 +619,7 @@ function S14_IDType({ data, onBack, onNext }: { data:FormData; onBack:()=>void; 
   ];
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
-      <Header step={14} total={30} label="Identity Verification" onBack={onBack} />
+      <Header step={14} total={30} label="Identity Verification" onBack={onBack} onSkip={onSkip} />
       <div style={{ padding:"8px 28px 28px" }}>
         <h1 style={{ fontSize:26, fontWeight:900, color:"#0a0a0a", marginBottom:6 }}>Choose your ID type</h1>
         <p style={{ fontSize:14, color:"#9CA3AF", marginBottom:28 }}>Select the document you&apos;ll use to verify your identity</p>
@@ -623,11 +637,11 @@ function S14_IDType({ data, onBack, onNext }: { data:FormData; onBack:()=>void; 
 }
 
 // ─── SCREEN 15: ID Front ─────────────────────────────────────────────────────
-function S15_IDFront({ onBack, onNext }: { onBack:()=>void; onNext:()=>void }) {
+function S15_IDFront({ onBack, onNext, onSkip }: { onBack:()=>void; onNext:()=>void; onSkip?:()=>void }) {
   const [captured, setCaptured]=useState(false);
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
-      <Header step={15} total={30} label="Identity Verification" onBack={onBack} />
+      <Header step={15} total={30} label="Identity Verification" onBack={onBack} onSkip={onSkip} />
       <div style={{ padding:"8px 28px 0" }}>
         <h1 style={{ fontSize:26, fontWeight:900, color:"#0a0a0a", marginBottom:6 }}>Front of your ID</h1>
         <p style={{ fontSize:14, color:"#9CA3AF" }}>Take a clear photo of the front side</p>
@@ -663,11 +677,11 @@ function S15_IDFront({ onBack, onNext }: { onBack:()=>void; onNext:()=>void }) {
 }
 
 // ─── SCREEN 16: ID Back ───────────────────────────────────────────────────────
-function S16_IDBack({ onBack, onNext }: { onBack:()=>void; onNext:()=>void }) {
+function S16_IDBack({ onBack, onNext, onSkip }: { onBack:()=>void; onNext:()=>void; onSkip?:()=>void }) {
   const [captured,setCaptured]=useState(false);
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
-      <Header step={16} total={30} label="Identity Verification" onBack={onBack} />
+      <Header step={16} total={30} label="Identity Verification" onBack={onBack} onSkip={onSkip} />
       <div style={{ padding:"8px 28px 0" }}>
         <h1 style={{ fontSize:26, fontWeight:900, color:"#0a0a0a", marginBottom:6 }}>Back of your ID</h1>
         <p style={{ fontSize:14, color:"#9CA3AF" }}>Now take the back side</p>
@@ -703,7 +717,7 @@ function S16_IDBack({ onBack, onNext }: { onBack:()=>void; onNext:()=>void }) {
 }
 
 // ─── SCREEN 17: Selfie Intro ──────────────────────────────────────────────────
-function S17_SelfieIntro({ onBack, onNext }: { onBack:()=>void; onNext:()=>void }) {
+function S17_SelfieIntro({ onBack, onNext, onSkip }: { onBack:()=>void; onNext:()=>void; onSkip?:()=>void }) {
   const tips=[
     {icon:"☀️",text:"Good lighting on your face"},
     {icon:"😐",text:"Neutral expression"},
@@ -712,7 +726,7 @@ function S17_SelfieIntro({ onBack, onNext }: { onBack:()=>void; onNext:()=>void 
   ];
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
-      <Header step={17} total={30} label="Identity Verification" onBack={onBack} />
+      <Header step={17} total={30} label="Identity Verification" onBack={onBack} onSkip={onSkip} />
       <div style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"0 28px" }}>
         <div style={{
           width:120, height:120, borderRadius:60, background:"linear-gradient(135deg,#F0EFFF,#E0DEFF)",
@@ -742,7 +756,7 @@ function S17_SelfieIntro({ onBack, onNext }: { onBack:()=>void; onNext:()=>void 
 }
 
 // ─── SCREEN 18: Selfie ───────────────────────────────────────────────────────
-function S18_Selfie({ onBack, onNext }: { onBack:()=>void; onNext:()=>void }) {
+function S18_Selfie({ onBack, onNext, onSkip }: { onBack:()=>void; onNext:()=>void; onSkip?:()=>void }) {
   const [captured,setCaptured]=useState(false);
   return (
     <div style={{ width:"100%", height:"100%", background:"#0a0a0a", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
@@ -751,6 +765,7 @@ function S18_Selfie({ onBack, onNext }: { onBack:()=>void; onNext:()=>void }) {
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="white" strokeWidth="2.5" strokeLinecap="round"/></svg>
         </button>
         <span style={{ color:"rgba(255,255,255,0.7)", fontSize:14 }}>Step 18/30</span>
+        {onSkip && <button onClick={onSkip} style={{ marginLeft:"auto", border:"none", background:"none", cursor:"pointer", color:"rgba(255,255,255,0.5)", fontSize:13, fontWeight:700 }}>Skip to dashboard →</button>}
       </div>
       <div style={{ flex:1, display:"flex", alignItems:"center", justifyContent:"center", position:"relative" }}>
         <div style={{ width:240, height:300, borderRadius:120, border:`3px solid ${captured?"#10B981":"#5B4FFF"}`, position:"relative", overflow:"hidden", display:"flex", alignItems:"center", justifyContent:"center", background:"rgba(91,79,255,0.05)" }}>
@@ -803,7 +818,7 @@ function S18_Selfie({ onBack, onNext }: { onBack:()=>void; onNext:()=>void }) {
 }
 
 // ─── SCREEN 19: KYC Review ───────────────────────────────────────────────────
-function S19_Review({ data, onBack, onNext }: { data:FormData; onBack:()=>void; onNext:()=>void }) {
+function S19_Review({ data, onBack, onNext, onSkip }: { data:FormData; onBack:()=>void; onNext:()=>void; onSkip?:()=>void }) {
   const rows=[
     {label:"Full name",value:`${data.firstName} ${data.lastName}`},
     {label:"Phone",value:data.phone||"Not set"},
@@ -820,7 +835,7 @@ function S19_Review({ data, onBack, onNext }: { data:FormData; onBack:()=>void; 
   ];
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
-      <Header step={19} total={30} label="Review" onBack={onBack} />
+      <Header step={19} total={30} label="Review" onBack={onBack} onSkip={onSkip} />
       <div style={{ padding:"8px 28px 16px" }}>
         <h1 style={{ fontSize:26, fontWeight:900, color:"#0a0a0a", marginBottom:6 }}>Review your info</h1>
         <p style={{ fontSize:14, color:"#9CA3AF" }}>Please confirm everything is correct</p>
@@ -839,9 +854,10 @@ function S19_Review({ data, onBack, onNext }: { data:FormData; onBack:()=>void; 
 }
 
 // ─── SCREEN 20: KYC Pending ───────────────────────────────────────────────────
-function S20_KYCPending({ onNext }: { onNext:()=>void }) {
+function S20_KYCPending({ onNext, onSkip }: { onNext:()=>void; onSkip?:()=>void }) {
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"0 28px", animation:"fadeInUp 0.4s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
+      {onSkip && <div style={{ position:"absolute", top:20, right:24 }}><button onClick={onSkip} style={{ border:"none", background:"none", cursor:"pointer", fontSize:13, fontWeight:700, color:"#9CA3AF", display:"flex", alignItems:"center", gap:4 }}>Skip to dashboard <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="#9CA3AF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg></button></div>}
       <div style={{
         width:100, height:100, borderRadius:50,
         background:"linear-gradient(135deg,#FFF7ED,#FED7AA)",
@@ -873,9 +889,10 @@ function S20_KYCPending({ onNext }: { onNext:()=>void }) {
 }
 
 // ─── SCREEN 21: PIN Intro ─────────────────────────────────────────────────────
-function S21_PINIntro({ onNext }: { onNext:()=>void }) {
+function S21_PINIntro({ onNext, onSkip }: { onNext:()=>void; onSkip?:()=>void }) {
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"0 28px", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
+      {onSkip && <div style={{ position:"absolute", top:20, right:24 }}><button onClick={onSkip} style={{ border:"none", background:"none", cursor:"pointer", fontSize:13, fontWeight:700, color:"#9CA3AF", display:"flex", alignItems:"center", gap:4 }}>Skip to dashboard <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="#9CA3AF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg></button></div>}
       <div style={{
         width:100, height:100, borderRadius:32,
         background:"linear-gradient(135deg,#5B4FFF,#7C6FFF)",
@@ -904,7 +921,7 @@ function S21_PINIntro({ onNext }: { onNext:()=>void }) {
 }
 
 // ─── SCREEN 22: PIN Create ────────────────────────────────────────────────────
-function S22_PINCreate({ onBack, onNext }: { onBack:()=>void; onNext:(pin:string)=>void }) {
+function S22_PINCreate({ onBack, onNext, onSkip }: { onBack:()=>void; onNext:(pin:string)=>void; onSkip?:()=>void }) {
   const [pin,setPin]=useState("");
   const LEN=6;
   function handleKey(k:string) {
@@ -913,7 +930,7 @@ function S22_PINCreate({ onBack, onNext }: { onBack:()=>void; onNext:(pin:string
   }
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
-      <Header step={22} total={30} label="Security" onBack={onBack} />
+      <Header step={22} total={30} label="Security" onBack={onBack} onSkip={onSkip} />
       <div style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"0 28px" }}>
         <div style={{ width:56, height:56, borderRadius:18, background:"linear-gradient(135deg,#5B4FFF,#7C6FFF)", display:"flex", alignItems:"center", justifyContent:"center", marginBottom:24 }}>
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="white" strokeWidth="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="white" strokeWidth="2" strokeLinecap="round"/></svg>
@@ -959,7 +976,7 @@ function S22_PINCreate({ onBack, onNext }: { onBack:()=>void; onNext:(pin:string
 }
 
 // ─── SCREEN 23: PIN Confirm ───────────────────────────────────────────────────
-function S23_PINConfirm({ pin, onBack, onNext }: { pin:string; onBack:()=>void; onNext:()=>void }) {
+function S23_PINConfirm({ pin, onBack, onNext, onSkip }: { pin:string; onBack:()=>void; onNext:()=>void; onSkip?:()=>void }) {
   const [confirm,setConfirm]=useState("");
   const [error,setError]=useState(false);
   const LEN=6;
@@ -975,7 +992,7 @@ function S23_PINConfirm({ pin, onBack, onNext }: { pin:string; onBack:()=>void; 
   }
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
-      <Header step={23} total={30} label="Security" onBack={onBack} />
+      <Header step={23} total={30} label="Security" onBack={onBack} onSkip={onSkip} />
       <div style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"0 28px" }}>
         <div style={{ width:56, height:56, borderRadius:18, background:error?"linear-gradient(135deg,#FEE2E2,#FECACA)":"linear-gradient(135deg,#5B4FFF,#7C6FFF)", display:"flex", alignItems:"center", justifyContent:"center", marginBottom:24, transition:"all 0.3s" }}>
           {error ? (
@@ -1102,12 +1119,12 @@ function S25_Notifications({ onBack, onNext, onSkip }: { onBack:()=>void; onNext
 }
 
 // ─── SCREEN 26: Avatar ───────────────────────────────────────────────────────
-function S26_Avatar({ onBack, onNext }: { onBack:()=>void; onNext:()=>void }) {
+function S26_Avatar({ onBack, onNext, onSkip }: { onBack:()=>void; onNext:()=>void; onSkip?:()=>void }) {
   const [selected,setSelected]=useState<string|null>(null);
   const emojis=["😀","😎","🤩","🥳","🦊","🐼","🦁","🐸","🦋","🌟","🔥","💎"];
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
-      <Header step={26} total={30} label="Profile" onBack={onBack} />
+      <Header step={26} total={30} label="Profile" onBack={onBack} onSkip={onSkip} />
       <div style={{ padding:"8px 28px 0" }}>
         <h1 style={{ fontSize:26, fontWeight:900, color:"#0a0a0a", marginBottom:6 }}>Choose an avatar</h1>
         <p style={{ fontSize:14, color:"#9CA3AF", marginBottom:24 }}>Pick something that represents you</p>
@@ -1144,13 +1161,13 @@ function S26_Avatar({ onBack, onNext }: { onBack:()=>void; onNext:()=>void }) {
 }
 
 // ─── SCREEN 27: Username ─────────────────────────────────────────────────────
-function S27_Username({ data, onBack, onNext }: { data:FormData; onBack:()=>void; onNext:(v:string)=>void }) {
+function S27_Username({ data, onBack, onNext, onSkip }: { data:FormData; onBack:()=>void; onNext:(v:string)=>void; onSkip?:()=>void }) {
   const [username,setUsername]=useState(data.username||`@${(data.firstName||"user").toLowerCase()}`);
   const clean = username.replace(/^@/,"");
   const valid = clean.length>=3 && /^[a-z0-9_]+$/.test(clean);
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
-      <Header step={27} total={30} label="Profile" onBack={onBack} />
+      <Header step={27} total={30} label="Profile" onBack={onBack} onSkip={onSkip} />
       <div style={{ padding:"8px 28px 28px" }}>
         <h1 style={{ fontSize:26, fontWeight:900, color:"#0a0a0a", marginBottom:6 }}>Pick a username</h1>
         <p style={{ fontSize:14, color:"#9CA3AF", marginBottom:28 }}>People can find you by your @username</p>
@@ -1176,13 +1193,13 @@ function S27_Username({ data, onBack, onNext }: { data:FormData; onBack:()=>void
 }
 
 // ─── SCREEN 28: Referral ─────────────────────────────────────────────────────
-function S28_Referral({ data, onBack, onNext }: { data:FormData; onBack:()=>void; onNext:(v:string)=>void }) {
+function S28_Referral({ data, onBack, onNext, onSkip }: { data:FormData; onBack:()=>void; onNext:(v:string)=>void; onSkip?:()=>void }) {
   const [code,setCode]=useState(data.referral);
   const [applied,setApplied]=useState(false);
   function apply() { if(code.length>=4) setApplied(true); }
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
-      <Header step={28} total={30} label="Bonuses" onBack={onBack} />
+      <Header step={28} total={30} label="Bonuses" onBack={onBack} onSkip={onSkip} />
       <div style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"0 28px" }}>
         <div style={{ fontSize:64, marginBottom:24 }}>🎁</div>
         <h1 style={{ fontSize:26, fontWeight:900, color:"#0a0a0a", textAlign:"center", marginBottom:8 }}>
@@ -1218,7 +1235,7 @@ function S28_Referral({ data, onBack, onNext }: { data:FormData; onBack:()=>void
 }
 
 // ─── SCREEN 29: Terms ────────────────────────────────────────────────────────
-function S29_Terms({ onBack, onNext }: { onBack:()=>void; onNext:()=>void }) {
+function S29_Terms({ onBack, onNext, onSkip }: { onBack:()=>void; onNext:()=>void; onSkip?:()=>void }) {
   const [accepted,setAccepted]=useState({terms:false,privacy:false,age:false});
   const allAccepted=accepted.terms&&accepted.privacy&&accepted.age;
   const items=[
@@ -1228,7 +1245,7 @@ function S29_Terms({ onBack, onNext }: { onBack:()=>void; onNext:()=>void }) {
   ];
   return (
     <div style={{ width:"100%", height:"100%", background:"white", display:"flex", flexDirection:"column", animation:"slideInRight 0.38s cubic-bezier(0.25,0.46,0.45,0.94)" }}>
-      <Header step={29} total={30} label="Terms" onBack={onBack} />
+      <Header step={29} total={30} label="Terms" onBack={onBack} onSkip={onSkip} />
       <div style={{ padding:"8px 28px 0" }}>
         <h1 style={{ fontSize:26, fontWeight:900, color:"#0a0a0a", marginBottom:6 }}>Almost there!</h1>
         <p style={{ fontSize:14, color:"#9CA3AF", marginBottom:28 }}>Please read and accept our terms to continue</p>
@@ -1305,14 +1322,14 @@ function S30_Success({ data }: { data:FormData }) {
         </div>
       )}
       <div style={{ width:"100%", marginBottom:12, marginTop:20 }}>
-        <button onClick={()=>router.push("/")} style={{
+        <button onClick={()=>router.push("/home")} style={{
           width:"100%", height:56, borderRadius:28, border:"none",
           background:"linear-gradient(135deg,#5B4FFF,#7C6FFF)", color:"white",
           fontSize:16, fontWeight:700, cursor:"pointer",
           boxShadow:"0 8px 24px rgba(91,79,255,0.35)",
         }}>Go to Dashboard</button>
       </div>
-      <button onClick={()=>router.push("/")} style={{ border:"none", background:"none", color:"#9CA3AF", fontSize:14, cursor:"pointer" }}>
+      <button onClick={()=>router.push("/home")} style={{ border:"none", background:"none", color:"#9CA3AF", fontSize:14, cursor:"pointer" }}>
         Explore first
       </button>
     </div>
@@ -1332,6 +1349,8 @@ export default function SignUpPage() {
   const [step, setStep] = useState<Step>("landing");
   const [data, setData] = useState<FormData>(INITIAL);
   const upd = (patch: Partial<FormData>) => setData(d=>({...d,...patch}));
+  const router = useRouter();
+  const skipToDashboard = () => router.push("/home");
 
   return (
     <main style={{ position:"relative", width:"100%", height:"100dvh", overflow:"hidden", maxWidth:430, margin:"0 auto", background:"white" }}>
@@ -1342,28 +1361,28 @@ export default function SignUpPage() {
       {step==="name"        && <S05_Name data={data} onBack={()=>setStep("email")} onNext={(f,l)=>{upd({firstName:f,lastName:l});setStep("dob");}}/>}
       {step==="dob"         && <S06_DOB data={data} onBack={()=>setStep("name")} onNext={(d,m,y)=>{upd({day:d,month:m,year:y});setStep("gender");}}/>}
       {step==="gender"      && <S07_Gender data={data} onBack={()=>setStep("dob")} onNext={g=>{upd({gender:g});setStep("address");}}/>}
-      {step==="address"     && <S08_Address data={data} onBack={()=>setStep("gender")} onNext={a=>{upd({address:a});setStep("city");}}/>}
-      {step==="city"        && <S09_City data={data} onBack={()=>setStep("address")} onNext={(c,p)=>{upd({city:c,postalCode:p});setStep("country");}}/>}
-      {step==="country"     && <S10_Country data={data} onBack={()=>setStep("city")} onNext={c=>{upd({country:c});setStep("nationality");}}/>}
-      {step==="nationality" && <S11_Nationality data={data} onBack={()=>setStep("country")} onNext={n=>{upd({nationality:n});setStep("occupation");}}/>}
-      {step==="occupation"  && <S12_Occupation data={data} onBack={()=>setStep("nationality")} onNext={o=>{upd({occupation:o});setStep("income");}}/>}
-      {step==="income"      && <S13_Income data={data} onBack={()=>setStep("occupation")} onNext={i=>{upd({income:i});setStep("id-type");}}/>}
-      {step==="id-type"     && <S14_IDType data={data} onBack={()=>setStep("income")} onNext={t=>{upd({idType:t});setStep("id-front");}}/>}
-      {step==="id-front"    && <S15_IDFront onBack={()=>setStep("id-type")} onNext={()=>setStep("id-back")}/>}
-      {step==="id-back"     && <S16_IDBack onBack={()=>setStep("id-front")} onNext={()=>setStep("selfie-intro")}/>}
-      {step==="selfie-intro"&& <S17_SelfieIntro onBack={()=>setStep("id-back")} onNext={()=>setStep("selfie")}/>}
-      {step==="selfie"      && <S18_Selfie onBack={()=>setStep("selfie-intro")} onNext={()=>setStep("review")}/>}
-      {step==="review"      && <S19_Review data={data} onBack={()=>setStep("selfie")} onNext={()=>setStep("kyc-pending")}/>}
-      {step==="kyc-pending" && <S20_KYCPending onNext={()=>setStep("pin-intro")}/>}
-      {step==="pin-intro"   && <S21_PINIntro onNext={()=>setStep("pin-create")}/>}
-      {step==="pin-create"  && <S22_PINCreate onBack={()=>setStep("pin-intro")} onNext={p=>{upd({pin:p});setStep("pin-confirm");}}/>}
-      {step==="pin-confirm" && <S23_PINConfirm pin={data.pin} onBack={()=>setStep("pin-create")} onNext={()=>setStep("biometric")}/>}
+      {step==="address"     && <S08_Address data={data} onBack={()=>setStep("gender")} onNext={a=>{upd({address:a});setStep("city");}} onSkip={skipToDashboard}/>}
+      {step==="city"        && <S09_City data={data} onBack={()=>setStep("address")} onNext={(c,p)=>{upd({city:c,postalCode:p});setStep("country");}} onSkip={skipToDashboard}/>}
+      {step==="country"     && <S10_Country data={data} onBack={()=>setStep("city")} onNext={c=>{upd({country:c});setStep("nationality");}} onSkip={skipToDashboard}/>}
+      {step==="nationality" && <S11_Nationality data={data} onBack={()=>setStep("country")} onNext={n=>{upd({nationality:n});setStep("occupation");}} onSkip={skipToDashboard}/>}
+      {step==="occupation"  && <S12_Occupation data={data} onBack={()=>setStep("nationality")} onNext={o=>{upd({occupation:o});setStep("income");}} onSkip={skipToDashboard}/>}
+      {step==="income"      && <S13_Income data={data} onBack={()=>setStep("occupation")} onNext={i=>{upd({income:i});setStep("id-type");}} onSkip={skipToDashboard}/>}
+      {step==="id-type"     && <S14_IDType data={data} onBack={()=>setStep("income")} onNext={t=>{upd({idType:t});setStep("id-front");}} onSkip={skipToDashboard}/>}
+      {step==="id-front"    && <S15_IDFront onBack={()=>setStep("id-type")} onNext={()=>setStep("id-back")} onSkip={skipToDashboard}/>}
+      {step==="id-back"     && <S16_IDBack onBack={()=>setStep("id-front")} onNext={()=>setStep("selfie-intro")} onSkip={skipToDashboard}/>}
+      {step==="selfie-intro"&& <S17_SelfieIntro onBack={()=>setStep("id-back")} onNext={()=>setStep("selfie")} onSkip={skipToDashboard}/>}
+      {step==="selfie"      && <S18_Selfie onBack={()=>setStep("selfie-intro")} onNext={()=>setStep("review")} onSkip={skipToDashboard}/>}
+      {step==="review"      && <S19_Review data={data} onBack={()=>setStep("selfie")} onNext={()=>setStep("kyc-pending")} onSkip={skipToDashboard}/>}
+      {step==="kyc-pending" && <S20_KYCPending onNext={()=>setStep("pin-intro")} onSkip={skipToDashboard}/>}
+      {step==="pin-intro"   && <S21_PINIntro onNext={()=>setStep("pin-create")} onSkip={skipToDashboard}/>}
+      {step==="pin-create"  && <S22_PINCreate onBack={()=>setStep("pin-intro")} onNext={p=>{upd({pin:p});setStep("pin-confirm");}} onSkip={skipToDashboard}/>}
+      {step==="pin-confirm" && <S23_PINConfirm pin={data.pin} onBack={()=>setStep("pin-create")} onNext={()=>setStep("biometric")} onSkip={skipToDashboard}/>}
       {step==="biometric"   && <S24_Biometric onBack={()=>setStep("pin-confirm")} onNext={()=>setStep("notifications")} onSkip={()=>setStep("notifications")}/>}
       {step==="notifications"&&<S25_Notifications onBack={()=>setStep("biometric")} onNext={()=>setStep("avatar")} onSkip={()=>setStep("avatar")}/>}
-      {step==="avatar"      && <S26_Avatar onBack={()=>setStep("notifications")} onNext={()=>setStep("username")}/>}
-      {step==="username"    && <S27_Username data={data} onBack={()=>setStep("avatar")} onNext={u=>{upd({username:u});setStep("referral");}}/>}
-      {step==="referral"    && <S28_Referral data={data} onBack={()=>setStep("username")} onNext={r=>{upd({referral:r});setStep("terms");}}/>}
-      {step==="terms"       && <S29_Terms onBack={()=>setStep("referral")} onNext={()=>setStep("success")}/>}
+      {step==="avatar"      && <S26_Avatar onBack={()=>setStep("notifications")} onNext={()=>setStep("username")} onSkip={skipToDashboard}/>}
+      {step==="username"    && <S27_Username data={data} onBack={()=>setStep("avatar")} onNext={u=>{upd({username:u});setStep("referral");}} onSkip={skipToDashboard}/>}
+      {step==="referral"    && <S28_Referral data={data} onBack={()=>setStep("username")} onNext={r=>{upd({referral:r});setStep("terms");}} onSkip={skipToDashboard}/>}
+      {step==="terms"       && <S29_Terms onBack={()=>setStep("referral")} onNext={()=>setStep("success")} onSkip={skipToDashboard}/>}
       {step==="success"     && <S30_Success data={data}/>}
     </main>
   );
