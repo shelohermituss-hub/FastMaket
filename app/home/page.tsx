@@ -137,6 +137,7 @@ function BottomNav({ active, onTab }: { active: Tab; onTab:(t:Tab)=>void }) {
 
 // ─── TAB 1: Home ───────────────────────────────────────────────────────────────
 function HomeTab() {
+  const router = useRouter();
   return (
     <div style={{ flex:1, overflowY:"auto", background:"white", paddingBottom:80 }}>
       {/* Header */}
@@ -250,7 +251,7 @@ function HomeTab() {
       <div style={{ padding:"0 20px" }}>
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:16 }}>
           <p style={{ fontSize:16, fontWeight:700, color:"#1A1A1A" }}>Transaction</p>
-          <button style={{ border:"none", background:"none", cursor:"pointer", color:"#5B4FFF", fontSize:13, fontWeight:600, display:"flex", alignItems:"center", gap:4 }}>
+          <button onClick={()=>router.push("/overview")} style={{ border:"none", background:"none", cursor:"pointer", color:"#5B4FFF", fontSize:13, fontWeight:600, display:"flex", alignItems:"center", gap:4 }}>
             View All
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="#5B4FFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
@@ -276,6 +277,7 @@ function HomeTab() {
 
 // ─── TAB 2: Statistics ─────────────────────────────────────────────────────────
 function StatisticsTab() {
+  const router = useRouter();
   const [period, setPeriod] = useState<"Day"|"Week"|"Month"|"Year">("Month");
   const [category, setCategory] = useState<"Income"|"Spend"|"Bills">("Income");
   const bars = [
@@ -287,7 +289,7 @@ function StatisticsTab() {
     <div style={{ flex:1, overflowY:"auto", background:"white", paddingBottom:80 }}>
       {/* Header */}
       <div style={{ padding:"20px 20px 16px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-        <button style={{ width:36, height:36, borderRadius:18, border:"1.5px solid #E5E7EB", background:"white", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
+        <button onClick={()=>router.push("/overview")} style={{ width:36, height:36, borderRadius:18, border:"1.5px solid #E5E7EB", background:"white", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="#1A1A1A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
         </button>
         <button style={{ width:36, height:36, borderRadius:18, border:"1.5px solid #E5E7EB", background:"white", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
