@@ -28,28 +28,6 @@ export default function OnboardingSlide1({ direction = "right" }: Props) {
         }}
       />
 
-      {/* Status bar */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 24px 0", position: "relative", zIndex: 10 }}>
-        <span style={{ fontSize: 15, fontWeight: 600, color: "#111" }}>09:41</span>
-        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-          <svg width="17" height="12" viewBox="0 0 17 12" fill="none">
-            <rect x="0" y="5" width="3" height="7" rx="1" fill="#111"/>
-            <rect x="4.5" y="3" width="3" height="9" rx="1" fill="#111"/>
-            <rect x="9" y="1" width="3" height="11" rx="1" fill="#111"/>
-          </svg>
-          <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
-            <path d="M8 2.5C10.4 2.5 12.5 3.5 14 5.2L15.5 3.7C13.6 1.8 11 0.5 8 0.5S2.4 1.8 0.5 3.7L2 5.2C3.5 3.5 5.6 2.5 8 2.5Z" fill="#111"/>
-            <path d="M8 5.5C9.6 5.5 11 6.2 12 7.3L13.5 5.8C12.1 4.4 10.2 3.5 8 3.5S3.9 4.4 2.5 5.8L4 7.3C5 6.2 6.4 5.5 8 5.5Z" fill="#111"/>
-            <circle cx="8" cy="10" r="2" fill="#111"/>
-          </svg>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <div style={{ width: 22, height: 11, borderRadius: 3, border: "1.5px solid #111", padding: "1.5px", display: "flex", alignItems: "center" }}>
-              <div style={{ width: 13, height: "100%", background: "#111", borderRadius: 1.5 }} />
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Card area */}
       <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", minHeight: 0, marginTop: 20 }}>
         {/* Ghost shadow card 2 */}

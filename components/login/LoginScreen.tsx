@@ -3,24 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-function StatusBar() {
-  return (
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 24px 0" }}>
-      <span style={{ fontSize: 15, fontWeight: 600, color: "#111" }}>09:41</span>
-      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-        <svg width="17" height="12" viewBox="0 0 17 12" fill="none">
-          <rect x="0" y="5" width="3" height="7" rx="1" fill="#111"/>
-          <rect x="4.5" y="3" width="3" height="9" rx="1" fill="#111"/>
-          <rect x="9" y="1" width="3" height="11" rx="1" fill="#111"/>
-        </svg>
-        <div style={{ width: 22, height: 11, borderRadius: 3, border: "1.5px solid #111", padding: "1.5px", display: "flex", alignItems: "center" }}>
-          <div style={{ width: 13, height: "100%", background: "#111", borderRadius: 1.5 }} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function LoginScreen() {
   const router = useRouter();
   const [phone, setPhone] = useState("");
@@ -34,8 +16,6 @@ export default function LoginScreen() {
       display: "flex", flexDirection: "column",
       animation: "slideInRight 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
     }}>
-      <StatusBar />
-
       {/* Back */}
       <div style={{ padding: "20px 24px 0" }}>
         <button
@@ -140,7 +120,7 @@ export default function LoginScreen() {
 
         {/* Forgot */}
         <div style={{ textAlign: "right" }}>
-          <a href="#" style={{ fontSize: 13, color: "#5B4FFF", fontWeight: 600, textDecoration: "none" }}>
+          <a href="/forgot-password" style={{ fontSize: 13, color: "#5B4FFF", fontWeight: 600, textDecoration: "none" }}>
             Forgot password?
           </a>
         </div>
